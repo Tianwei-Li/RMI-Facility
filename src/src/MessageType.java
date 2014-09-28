@@ -1,6 +1,8 @@
 package src;
 
-public enum MessageType {
+import java.io.Serializable;
+
+public enum MessageType implements Serializable{
 	LOOK_UP,
 	RMI,
 	LIST;

@@ -5,10 +5,10 @@ import java.lang.reflect.Proxy;
 
 public class RemoteObjectRef implements Serializable 
 {
-	String IP_adr;
-	int Port;
-	int Obj_Key;
-	String Remote_Interface_Name;
+	public String IP_adr;
+	public int Port;
+	public int Obj_Key;
+	public String Remote_Interface_Name;
 	transient Object proxy;
 
 	public RemoteObjectRef(String ip, int port, int obj_key, String riname) 
