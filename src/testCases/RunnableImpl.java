@@ -17,15 +17,21 @@ public class RunnableImpl implements Runnable {
 	}
 
 	@Override
-	public void run(String[] args) {
+	public String run(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("get args" + Arrays.toString(args));
+		return ("get args" + Arrays.toString(args));
 	}
 
 	@Override
 	public void run(int[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("get int args" + Arrays.toString(args));
+	}
+
+	@Override
+	public String run(int arg) {
+		// TODO Auto-generated method stub
+		return "This is return of int arg";
 	}
 
 }

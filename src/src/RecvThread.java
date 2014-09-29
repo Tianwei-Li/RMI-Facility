@@ -30,7 +30,8 @@ public class RecvThread extends Thread {
 				if (message != null) {
 					System.out.println("received new process!");
 					if (message.getType() == MessageType.RMI) {
-						TestServer.handleRMI((RMIMessage)message);
+						Object o = TestServer.handleRMI((RMIMessage)message);
+						send(new ObjectMessage(o), recvSocket);
 					}
 				}
 			}
@@ -60,6 +61,35 @@ public class RecvThread extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public Socket send(Message message, Socket sendSock) throws IOException {
+		// setup connection if there is not already existed
+		
+        ObjectOutputStream output = null;
+        try {
+        	output = new ObjectOutputStream(sendSock.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        if (output != null) {
+            try {
+                output.writeObject(message);
+                output.flush();
+                output.reset();
+            }
+            catch (IOException e) {
+            	e.printStackTrace();
+                System.out.println("Error: failed to send the message! Client Stub aborted!");
+                sendSock.close();
+                return null;
+            }
+        } else {
+            System.out.println("Error: failed to send the message! Client Stub aborted!");
+            sendSock.close();
+            return null;
+        }
+        return sendSock;
 	}
 	
 }

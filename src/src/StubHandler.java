@@ -2,6 +2,7 @@ package src;
 
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -28,12 +29,28 @@ public class StubHandler implements InvocationHandler{
 			}
 		}
 		Message message = new RMIMessage(arg2, argClass, arg1.getName(), ror);
-		send(message, ror.IP_adr, ror.Port);
-		System.out.println(message);
+		Socket socket = send(message, ror.IP_adr, ror.Port);
+		if (socket == null) {
+			System.out.println("Connection error.");
+		} else {
+			return receive(socket);
+		}
+		//System.out.println(message);
 		return null;
 	}
-	
-	public boolean send(Message message, String ip, int port) throws IOException {
+	public Object receive(Socket socket) {
+		try {
+			ObjectInputStream ois =  new ObjectInputStream(socket.getInputStream());
+			ObjectMessage message = (ObjectMessage) ois.readObject();
+			return message.getObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public Socket send(Message message, String ip, int port) throws IOException {
 		// setup connection if there is not already existed
 		Socket sendSock;
 		try {
@@ -49,7 +66,7 @@ public class StubHandler implements InvocationHandler{
          
         if (sendSock == null) {
             // createSendSock failed
-            return false;
+            return null;
         }
         ObjectOutputStream output = null;
         try {
@@ -68,15 +85,14 @@ public class StubHandler implements InvocationHandler{
             	e.printStackTrace();
                 System.out.println("Error: failed to send the message! Client Stub aborted!");
                 sendSock.close();
-                return false;
+                return null;
             }
         } else {
             System.out.println("Error: failed to send the message! Client Stub aborted!");
             sendSock.close();
-            return false;
+            return null;
         }
-        sendSock.close();
-        return true;
+        return sendSock;
 	}
 	
 }

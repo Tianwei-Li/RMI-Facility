@@ -31,8 +31,12 @@ public class TestServer {
 		inst = new TestServer();
 	}
 	
-	public static void handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Method method = runnable.getClass().getMethod(message.getMethod(), message.getArgClass());
-		method.invoke(runnable, message.args);
+	public static Object handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		try {
+			Method method = runnable.getClass().getMethod(message.getMethod(), message.getArgClass());
+			return method.invoke(runnable, message.args);
+		} catch (Exception e) {
+			return e.getStackTrace();
+		}
 	}
 }
