@@ -18,7 +18,7 @@ public class SimpleRegistry
 
 	@Override
 	public String toString() {
-		return Host + Port;
+		return Host + " " + Port;
 	}
 
 	// returns the ROR (if found) or null (if else)
@@ -65,7 +65,6 @@ public class SimpleRegistry
 			if (recvMessage.getObject() != null) {
 				System.out.println("it is found!.");
 				ror = (RemoteObjectRef)(recvMessage.getObject());
-				System.out.println(ror.toString());
 			}
 			else {
 				System.out.println("it is not found!.");

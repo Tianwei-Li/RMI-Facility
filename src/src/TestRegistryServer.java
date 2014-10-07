@@ -29,7 +29,7 @@ public class TestRegistryServer {
 	}
 	
 	public RemoteObjectRef lookup(String serviceName) {
-		if (regTable.contains(serviceName) == true) {
+		if (regTable.containsKey(serviceName) == true) {
 			return regTable.get(serviceName);
 		}
 		return null;

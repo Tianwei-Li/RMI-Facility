@@ -32,10 +32,8 @@ public class testRebind
 		// locate.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(host, port);
 
-		System.out.println("located."+sr+"/n");
-
-		if (sr != null)
-		{
+		if (sr != null) {
+			System.out.println("located registry server at " + sr.toString());
 			// bind.
 			sr.rebind(ServiceName, ror);
 
@@ -48,8 +46,7 @@ public class testRebind
 			System.out.println("Interface name is "+ror2.Remote_Interface_Name);
 
 		}
-		else		
-		{
+		else {
 			System.out.println("no registry found.");
 		}
 
