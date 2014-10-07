@@ -1,6 +1,7 @@
 package src;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
+import java.util.Set;
 import java.io.*;
 
 /**
@@ -48,7 +49,10 @@ public class RegistryServerRecvThread extends Thread {
 						BasicMessage basicMsg = new BasicMessage("rebind succeed!");
 						send(basicMsg, recvSocket);
 					} else if (msgType == MessageType.LIST) {
-						// TODO: list all elements in the registry
+						// TODO: list all service names in the registry
+						Set<String> st = TestRegistryServer.getInstance().regTable.keySet();
+						BasicMessage msg = new BasicMessage(st.toString());
+						send(msg, recvSocket);
 					}
 				}
 			}

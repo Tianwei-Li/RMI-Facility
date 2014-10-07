@@ -23,6 +23,14 @@ public class UnitTest {
 		RemoteObjectRef ror = null;
 		if (sr != null) {
 			System.out.println("located registry server at "+ sr.toString());
+			// list all service names
+			String services = sr.list();
+			if (services != null) {
+				System.out.println(services);
+			} else {
+				System.out.println("Can not list the services!");
+			}
+			
 			// lookup.
 			ror = sr.lookup(ServiceName);
 			if (ror == null) {
