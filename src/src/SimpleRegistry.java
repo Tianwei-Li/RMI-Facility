@@ -16,99 +16,127 @@ public class SimpleRegistry
 		Port = PortNum;
 	}
 
+	@Override
+	public String toString() {
+		return Host + Port;
+	}
+
 	// returns the ROR (if found) or null (if else)
-	public RemoteObjectRef lookup(String serviceName) 
-			throws IOException
-			{
+	public RemoteObjectRef lookup(String serviceName) throws IOException
+	{
 		// open socket.
 		// it assumes registry is already located by locate registry.
 		// you should usually do try-catch here (and later).
-		Socket soc = new Socket(Host, Port);
+		Socket sendSock = new Socket(Host, Port);
 
-		System.out.println("socket made.");
+		// ask.
+		Message message = new LookupMessage(serviceName);
+		ObjectOutputStream output = null;
+		try {
+			output = new ObjectOutputStream(sendSock.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		// get TCP streams and wrap them. 
-		BufferedReader in = 
-				new BufferedReader(new InputStreamReader (soc.getInputStream()));
-		PrintWriter out = 
-				new PrintWriter(soc.getOutputStream(), true);
-
-		System.out.println("stream made.");
-
-		// it is locate request, with a service name.
-		out.println("lookup");
-		out.println(serviceName);
-
+		if (output != null) {
+			try {
+				output.writeObject(message);
+				output.flush();
+				output.reset();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Error: failed to send the message! Client Stub aborted!");
+				sendSock.close();
+				return null;
+			}
+		} else {
+			System.out.println("Error: failed to send the message! Client Stub aborted!");
+			sendSock.close();
+			return null;
+		}
 		System.out.println("command and service name sent.");
 
 		// branch according to the answer.
-		String res = in.readLine();
-		RemoteObjectRef ror;
+		RemoteObjectRef ror = null;
+		try {
+			ObjectInputStream ois =  new ObjectInputStream(sendSock.getInputStream());
+			ObjectMessage recvMessage = (ObjectMessage) ois.readObject();
+			if (recvMessage.getObject() != null) {
+				System.out.println("it is found!.");
+				ror = (RemoteObjectRef)(recvMessage.getObject());
+				System.out.println(ror.toString());
+			}
+			else {
+				System.out.println("it is not found!.");
+				ror = null;
+			}
 
-		if (res.equals("found")) {
-
-			System.out.println("it is found!.");
-
-			// receive ROR data, witout check.
-			String ro_IPAdr = in.readLine();
-
-			System.out.println(ro_IPAdr);
-
-			int ro_PortNum = Integer.parseInt(in.readLine());
-
-			System.out.println(ro_PortNum);
-
-			int ro_ObjKey = Integer.parseInt(in.readLine());
-
-			System.out.println(ro_ObjKey);
-
-			String ro_InterfaceName = in.readLine();
-
-			System.out.println(ro_InterfaceName);
-
-
-			// make ROR.
-			ror = new RemoteObjectRef(ro_IPAdr, ro_PortNum, ro_ObjKey, ro_InterfaceName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		else {
-			System.out.println("it is not found!.");
-			ror = null;
-		}
-
 		// close the socket.
-		soc.close();
+		sendSock.close();
 
 		// return ROR.
 		return ror;
-			}
+	}
 
 	// rebind a ROR. ROR can be null. again no check, on this or whatever. 
 	// I hate this but have no time.
-	public void rebind(String serviceName, RemoteObjectRef ror) 
-			throws IOException
-			{
+	public void rebind(String serviceName, RemoteObjectRef ror) throws IOException
+	{
 		// open socket. same as before.
-		Socket soc = new Socket(Host, Port);
+		Socket sendSock = new Socket(Host, Port);
 
-		// get TCP streams and wrap them. 
-		BufferedReader in = 
-				new BufferedReader(new InputStreamReader (soc.getInputStream()));
-		PrintWriter out = 
-				new PrintWriter(soc.getOutputStream(), true);
+		// ask.
+		Message message = new RebindMessage(serviceName, ror);
+		ObjectOutputStream output = null;
+		try {
+			output = new ObjectOutputStream(sendSock.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		// it is a rebind request, with a service name and ROR.
-		out.println("rebind");
-		out.println(serviceName);
-		out.println(ror.IP_adr);
-		out.println(ror.Port); 
-		out.println(ror.Obj_Key);
-		out.println(ror.Remote_Interface_Name);
-
-		// it also gets an ack, but this is not used.
-		String ack = in.readLine();
-
-		// close the socket.
-		soc.close();
+		if (output != null) {
+			try {
+				output.writeObject(message);
+				output.flush();
+				output.reset();
 			}
+			catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Error: failed to send the message! Client Stub aborted!");
+				sendSock.close();
+				return;
+			}
+		} else {
+			System.out.println("Error: failed to send the message! Client Stub aborted!");
+			sendSock.close();
+			return;
+		}
+		System.out.println("command and service name sent.");
+
+		// branch according to the answer.
+		try {
+			ObjectInputStream ois =  new ObjectInputStream(sendSock.getInputStream());
+			BasicMessage recvMessage = (BasicMessage) ois.readObject();
+			if (recvMessage != null) {
+				System.out.println(recvMessage.getMsg());
+			}
+			else {
+				System.out.println("rebind failed!.");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		// close the socket.
+		sendSock.close();
+	}
 } 
 

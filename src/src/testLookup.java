@@ -22,7 +22,7 @@ public class testLookup
 	// locate.
 	SimpleRegistry sr = LocateSimpleRegistry.getRegistry(host, port);
 
-	System.out.println("located."+sr+"/n");
+	System.out.println("located."+sr.toString()+"/n");
 	
 	if (sr != null)
 	    {
