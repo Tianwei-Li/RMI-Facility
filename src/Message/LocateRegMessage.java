@@ -1,6 +1,12 @@
 package Message;
 
 import java.io.Serializable;
+
+/**
+ * This message will request for locate a registry server.
+ * @author tianweil
+ *
+ */
 public class LocateRegMessage extends Message implements Serializable{
 	/**
 	 * 

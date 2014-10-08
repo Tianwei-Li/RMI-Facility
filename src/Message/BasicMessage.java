@@ -2,6 +2,11 @@ package Message;
 
 import java.io.Serializable;
 
+/**
+ * A basic String message
+ * @author tianweil
+ *
+ */
 public class BasicMessage extends Message implements Serializable{
 	/**
 	 * 

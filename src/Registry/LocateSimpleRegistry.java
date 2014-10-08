@@ -15,10 +15,10 @@ public class LocateSimpleRegistry {
 	public static SimpleRegistry getRegistry(String host, int port) {
 		// open socket.
 		try {
-			Socket sendSock = new Socket(host, port);
+			final Socket sendSock = new Socket(host, port);
 
 			// ask.
-			Message message = new LocateRegMessage("who are you?");
+			final Message message = new LocateRegMessage("who are you?");
 			ObjectOutputStream output = null;
 	        try {
 	        	output = new ObjectOutputStream(sendSock.getOutputStream());
@@ -47,8 +47,8 @@ public class LocateSimpleRegistry {
 
 			// gets answer.
 	        try {
-				ObjectInputStream ois =  new ObjectInputStream(sendSock.getInputStream());
-				LocateRegMessage recvMessage = (LocateRegMessage) ois.readObject();
+	        	final ObjectInputStream ois =  new ObjectInputStream(sendSock.getInputStream());
+	        	final LocateRegMessage recvMessage = (LocateRegMessage) ois.readObject();
 				if (recvMessage.msg.equals("I am a simple registry.")) {
 					return new SimpleRegistry(host, port);
 				}

@@ -4,16 +4,22 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import Remote.RemoteObjectRef;
+
+/**
+ * This message is the key message that send the calling information of an ROR
+ * @author wendiz
+ *
+ */
 @SuppressWarnings("rawtypes")
 public class RMIMessage extends Message implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2947511566888739994L;
-	public final Object[] args;
-	public final Class[] argClass;
-	public final String method;
-	public final RemoteObjectRef ror;
+	public final Object[] args;	//Arguments of the method.
+	public final Class[] argClass;	//Type of the arguments.
+	public final String method;	//Name of the method.
+	public final RemoteObjectRef ror;	//ROR is used to get real object on the server.
 	
 	public RMIMessage(Object[] args, Class[] argClass, String method, RemoteObjectRef ror) {
 		super(MessageType.RMI);

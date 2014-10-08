@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import Remote.RemoteObjectRef;
 
+/**
+ * This message is used to rebind a service name and ROR.
+ * @author Terryli
+ *
+ */
 public class RebindMessage extends Message implements Serializable{
 	/**
 	 * 

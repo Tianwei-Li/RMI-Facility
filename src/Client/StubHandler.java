@@ -20,11 +20,18 @@ public class StubHandler implements InvocationHandler{
 		this.ror = ror;
 	}
 
+	/**
+	 * Override the invoke method to control the behavior when a Stub method get called
+	 * arg0 is the caller object.
+	 * arg1 is the method that get called.
+	 * arg2 is the argument for the method.
+	 */
 	@Override
 	public Object invoke(Object arg0, Method arg1, Object[] arg2)
 			throws Throwable {
+		//Create an array of Class object, recording type of the arguments
 		@SuppressWarnings("rawtypes")
-		Class[] argClass;
+		final Class[] argClass;
 		if (arg2 == null) {
 			argClass = null;
 		} else {
@@ -33,13 +40,17 @@ public class StubHandler implements InvocationHandler{
 				argClass[i] = arg2[i].getClass();
 			}
 		}
-		Message message = new RMIMessage(arg2, argClass, arg1.getName(), ror);
-		Socket socket = send(message, ror.IP_adr, ror.Port);
+		//Constructing RMI message send to server.
+		final Message message = new RMIMessage(arg2, argClass, arg1.getName(), ror);
+		final Socket socket = send(message, ror.IP_adr, ror.Port);
 		if (socket == null) {
 			System.out.println("Connection error.");
 		} else {
+			//Get returned Object.
 			Object receiveObject = receive(socket);
 			socket.close();
+			//If an ROR is returned, call localise to return the stub
+			//(a proxy instance in our design) to the client.
 			if (receiveObject instanceof RemoteObjectRef) {
 				return ((RemoteObjectRef) receiveObject).localise();
 			}
@@ -48,6 +59,11 @@ public class StubHandler implements InvocationHandler{
 		//System.out.println(message);
 		return null;
 	}
+	/**
+	 * Receive an object from the given socket and return.
+	 * @param socket
+	 * @return
+	 */
 	public Object receive(Socket socket) {
 		try {
 			ObjectInputStream ois =  new ObjectInputStream(socket.getInputStream());
@@ -60,6 +76,15 @@ public class StubHandler implements InvocationHandler{
 		}
 		return null;
 	}
+	
+	/**
+	 * Send the message to the given ip and port number.
+	 * @param message
+	 * @param ip
+	 * @param port
+	 * @return
+	 * @throws IOException
+	 */
 	public Socket send(Message message, String ip, int port) throws IOException {
 		// setup connection if there is not already existed
 		Socket sendSock;

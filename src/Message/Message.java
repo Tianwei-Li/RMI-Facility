@@ -2,6 +2,11 @@ package Message;
 
 import java.io.Serializable;
 
+/**
+ * The basic Message type.
+ * @author wendiz
+ *
+ */
 public class Message implements Serializable{
 	/**
 	 * 

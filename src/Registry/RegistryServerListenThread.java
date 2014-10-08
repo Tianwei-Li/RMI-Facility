@@ -15,10 +15,10 @@ public class RegistryServerListenThread extends Thread {
 	
 	@Override
 	public void run() {
-		TestRegistryServer inst = TestRegistryServer.getInstance();
+		final TestRegistryServer inst = TestRegistryServer.getInstance();
 		try {
 			while (true) {
-				Socket skt = inst.listenSock.accept();
+				final Socket skt = inst.listenSock.accept();
 				(new RegistryServerRecvThread(skt)).start();
 			}
 		} catch (IOException e) {

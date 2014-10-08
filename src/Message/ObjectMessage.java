@@ -2,6 +2,11 @@ package Message;
 
 import java.io.Serializable;
 
+/**
+ * Object message is a message used to pass an object.
+ * @author wendiz
+ *
+ */
 public class ObjectMessage extends Message implements Serializable{
 	/**
 	 * 

@@ -2,6 +2,11 @@ package Message;
 
 import java.io.Serializable;
 
+/**
+ * This message is a lookup message which contains a service name.
+ * @author wendiz
+ *
+ */
 public class LookupMessage extends Message implements Serializable{
 	/**
 	 * 
