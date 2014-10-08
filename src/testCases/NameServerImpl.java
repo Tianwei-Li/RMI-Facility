@@ -7,6 +7,7 @@ implements NameServer
 	String serviceName;
 	RemoteObjectRef ro;
 	NameServer next;
+	public static final String interfaceName = "testCases.NameServer";
 
 	public NameServerImpl() {
 		serviceName="";
@@ -33,6 +34,11 @@ implements NameServer
 
 	public  NameServer next() {
 		return next;
+	}
+
+	@Override
+	public String getServiceName() {
+		return interfaceName;
 	}
 }
 

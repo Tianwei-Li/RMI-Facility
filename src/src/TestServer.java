@@ -5,26 +5,29 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 
-import testCases.Runnable;
-import testCases.RunnableImpl;
+import testCases.NameServerImpl;
+import testCases.ZipCodeRList;
+import testCases.ZipCodeRListImpl;
 
 public class TestServer {
-	ServerSocket listenSock;
-	ListenThread listenThread;
+	public ServerSocket listenSock;
+	public ListenThread listenThread;
 	public static TestServer inst;
-	static Runnable runnable;
+	static ZipCodeRList zipcode;
+	static final String regHost = "127.0.0.1";
+	static final  int regPort = 54321;
 	public TestServer() throws IOException {
-		runnable = new RunnableImpl();
-
+		zipcode = new ZipCodeRListImpl("beijing","15213",null);
+		zipcode = zipcode.add("shanghai", "15640");
+		
 		// register ror to registry
-		String regHost = "127.0.0.1";
-		int regPort = 54321;
+		
 
 		// these are data.
-		String ServiceName = "Runnable";
+		String ServiceName = "testCases.ZipCodeRList";
 
 		// make ROR.
-		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, 111, "testCases.Runnable");
+		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, 111, "testCases.ZipCodeRList");
 
 		// locate.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
@@ -59,8 +62,15 @@ public class TestServer {
 
 	public static Object handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		try {
-			Method method = runnable.getClass().getMethod(message.getMethod(), message.getArgClass());
-			return method.invoke(runnable, message.args);
+			Method method = zipcode.getClass().getMethod(message.getMethod(), message.getArgClass());
+			Object returnObject = method.invoke(zipcode, message.args);
+			if (returnObject instanceof Remote) {
+				//TODO: remove hard code
+				zipcode = (ZipCodeRList)returnObject;
+				SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
+				returnObject = sr.lookup(((Remote) returnObject).getServiceName());
+			}
+			return returnObject;
 		} catch (Exception e) {
 			return e.getStackTrace();
 		}

@@ -1,5 +1,8 @@
 package testCases;
-public interface ZipCodeRList // extends YourRemote or whatever
+
+import src.Remote;
+
+public interface ZipCodeRList extends Remote// extends YourRemote or whatever
 {
     public String find(String city);
     public ZipCodeRList add(String city, String zipcode);

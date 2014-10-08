@@ -1,8 +1,10 @@
 package testCases;
 
-public interface Runnable {
+import src.Remote;
+
+public interface Runnable extends Remote {
 	public void run(String arg);
-	public void run();
 	public String run(String[] args);
 	public void run(int[] args);
+	public Runnable run();
 }

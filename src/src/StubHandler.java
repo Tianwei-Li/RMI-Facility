@@ -33,7 +33,12 @@ public class StubHandler implements InvocationHandler{
 		if (socket == null) {
 			System.out.println("Connection error.");
 		} else {
-			return receive(socket);
+			Object receiveObject = receive(socket);
+			socket.close();
+			if (receiveObject instanceof RemoteObjectRef) {
+				return ((RemoteObjectRef) receiveObject).localise();
+			}
+			return receiveObject;
 		}
 		//System.out.println(message);
 		return null;
