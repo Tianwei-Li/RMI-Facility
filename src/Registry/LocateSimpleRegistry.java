@@ -58,11 +58,13 @@ public class LocateSimpleRegistry {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
+	        sendSock.close();
 		}
 		catch (Exception e) { 
 			System.out.println("nobody is there!"+e);
 			return null;
 		}
+		
 		return null;
 	}
 }

@@ -1,9 +1,16 @@
 package testCases;
-public class ZipCodeList
+
+import java.io.Serializable;
+
+public class ZipCodeList implements Serializable
 {
-    String city;
-    String ZipCode;
-    ZipCodeList next;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4070105540610303648L;
+	public String city;
+    public String ZipCode;
+    public ZipCodeList next;
 
     public ZipCodeList(String c, String z, ZipCodeList n)
     {

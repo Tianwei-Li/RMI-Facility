@@ -5,6 +5,10 @@ import java.io.Serializable;
 import Remote.RemoteObjectRef;
 
 public class RebindMessage extends Message implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4117438874555433925L;
 	final String serviceName;
 	final RemoteObjectRef ror;
 	public RebindMessage(String serviceName, RemoteObjectRef ror) {

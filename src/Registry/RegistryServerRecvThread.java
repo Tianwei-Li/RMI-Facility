@@ -1,8 +1,9 @@
 package Registry;
-import java.lang.reflect.InvocationTargetException;
-import java.net.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.Set;
-import java.io.*;
 
 import Message.BasicMessage;
 import Message.LocateRegMessage;
@@ -39,7 +40,7 @@ public class RegistryServerRecvThread extends Thread {
 			while (true) {
 				Message message = (Message) ois.readObject();
 				if (message != null) {
-					System.out.println("received new process!");
+					System.out.println("received new message!");
 					MessageType msgType = message.getType();
 
 					if (msgType == MessageType.LOCATE_MSG) {

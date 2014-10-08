@@ -12,7 +12,9 @@ package testCases;
 //   end.
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import Registry.LocateSimpleRegistry;
 import Registry.SimpleRegistry;
@@ -59,17 +61,25 @@ public class ZipCodeRListClient {
 		// the final value of l should be the initial head of 
 		// the list.
 
-		// we print out the local zipcodelist.
-		System.out.println("This is the original list.");
+		
+
 		ZipCodeList temp = l;
+		ZipCodeList itrList = new ZipCodeList("dummy","dummy",null);
 		while (temp !=null)            
 		{
-			System.out.println
-			("city: "+temp.city+", "+
-					"code: "+temp.ZipCode);       
+			itrList= new ZipCodeList(temp.city, temp.ZipCode, itrList);
 			temp = temp.next;                        
 		}
-
+		
+		// we print out the local zipcodelist.
+		System.out.println("This is the original list.");
+		temp = itrList;
+		while (temp != null) {
+			System.out.println("city: " + temp.city + ", " + "code: "
+					+ temp.ZipCode);
+			temp = temp.next;
+		}
+		
 		// test "add".
 		System.out.println("testing add.");
 		temp = l;
@@ -85,7 +95,7 @@ public class ZipCodeRListClient {
 		// test "find" and "next" by printing all. 
 		// This is also the test that "add" performed all right.
 		System.out.println("\n This is the remote list, printed using find/next.");
-		temp = l;
+		temp = itrList;
 		rtemp = rl;
 		while (temp !=null)
 		{
@@ -95,7 +105,8 @@ public class ZipCodeRListClient {
 					"code: "+res);
 			temp=temp.next;
 			rtemp = rtemp.next();
-		}        		
+		} 
+		in.close();
 	}
 }
 

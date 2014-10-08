@@ -34,7 +34,7 @@ public class ServerDispatcher extends Thread {
 			while (true) {
 				Message message = (Message) ois.readObject();
 				if (message != null) {
-					System.out.println("received new process!");
+					System.out.println("received new message!");
 					MessageType msgType = message.getType();
 					switch (msgType) {
 					case RMI:
@@ -51,19 +51,14 @@ public class ServerDispatcher extends Thread {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

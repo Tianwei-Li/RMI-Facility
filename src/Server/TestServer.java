@@ -14,6 +14,8 @@ import Remote.Remote;
 import Remote.RemoteObjectRef;
 import Remote.ZipCodeRList;
 import Remote.ZipCodeRListImpl;
+import Remote.ZipCodeServer;
+import Remote.ZipCodeServerImpl;
 
 public class TestServer {
 	public ServerSocket listenSock;
@@ -24,16 +26,18 @@ public class TestServer {
 	static public  RORtbl rortbl;
 	public TestServer() throws IOException {
 		ZipCodeRList zipcode = new ZipCodeRListImpl("beijing","15213",null);
+		ZipCodeServer zipcodeServer = new ZipCodeServerImpl();
 		
 		// register ror to registry
 		
 
 		// these are data.
 		String ServiceName = "Remote.ZipCodeRList";
+		String ServiceName2 = "Remote.ZipCodeServer";
 
 		// make ROR.
 		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ServiceName);
-
+		RemoteObjectRef ror2 = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ServiceName2);
 		// locate.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
 
@@ -41,6 +45,7 @@ public class TestServer {
 			System.out.println("located registry server at " + sr.toString());
 			// bind.
 			sr.rebind(ServiceName, ror);
+			sr.rebind(ServiceName2, ror2);
 		}
 		else {
 			System.out.println("no registry found.");
@@ -48,6 +53,7 @@ public class TestServer {
 		
 		rortbl = new RORtbl();
 		rortbl.add(ror, zipcode);
+		rortbl.add(ror2, zipcodeServer);
 
 
 		try {
@@ -71,15 +77,16 @@ public class TestServer {
 	public static Object handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		try {
 			Object remoteInstance = rortbl.findOBJ(message.ror);
-			Method method = remoteInstance.getClass().getMethod(message.getMethod(), message.getArgClass());
+ 			Method method = remoteInstance.getClass().getMethod(message.getMethod(), message.getArgClass());
 			Object returnObject = method.invoke(remoteInstance, message.args);
 			if (returnObject instanceof Remote) {
 				//TODO: remove hard code
-				Object newObject = rortbl.findROR(returnObject);
-				if (newObject == null) {
-					newObject = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ((Remote) returnObject).getServiceName());
+				RemoteObjectRef newROR = rortbl.findROR(returnObject);
+				if (newROR == null) {
+					newROR = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ((Remote) returnObject).getServiceName());
+					rortbl.add(newROR, returnObject);
 				}
-				returnObject = newObject;
+				returnObject = newROR;
 			}
 			return returnObject;
 		} catch (Exception e) {

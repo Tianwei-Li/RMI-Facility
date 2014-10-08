@@ -6,6 +6,10 @@ import java.util.Arrays;
 import Remote.RemoteObjectRef;
 @SuppressWarnings("rawtypes")
 public class RMIMessage extends Message implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2947511566888739994L;
 	public final Object[] args;
 	public final Class[] argClass;
 	public final String method;

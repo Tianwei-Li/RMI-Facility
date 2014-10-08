@@ -17,6 +17,7 @@ import java.io.*;
 import Registry.LocateSimpleRegistry;
 import Registry.SimpleRegistry;
 import Remote.RemoteObjectRef;
+import Remote.ZipCodeServer;
 
 
 public class ZipCodeClient { 
@@ -96,6 +97,7 @@ public class ZipCodeClient {
 		System.out.println("\n We test the remote site printing.");
 		// here is a test.
 		zcs.printAll();
+		in.close();
 	}
 }
 

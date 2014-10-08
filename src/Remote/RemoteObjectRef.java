@@ -8,6 +8,10 @@ import Client.StubHandler;
 
 public class RemoteObjectRef implements Serializable 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4213346249184427866L;
 	public String IP_adr;
 	public int Port;
 	public long Obj_Key;
@@ -24,6 +28,7 @@ public class RemoteObjectRef implements Serializable
 
 	// this method is important, since it is a stub creator.
 	// 
+	@SuppressWarnings("rawtypes")
 	public Object localise() throws ClassNotFoundException
 	{
 		if (proxy == null) {

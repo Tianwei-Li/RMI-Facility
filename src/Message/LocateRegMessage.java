@@ -1,9 +1,11 @@
 package Message;
 
 import java.io.Serializable;
-import java.util.Arrays;
-@SuppressWarnings("rawtypes")
 public class LocateRegMessage extends Message implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5998352119159478226L;
 	public final String msg;
 	
 	public LocateRegMessage(String msg) {
