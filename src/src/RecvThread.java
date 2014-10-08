@@ -29,9 +29,14 @@ public class RecvThread extends Thread {
 				Message message = (Message) ois.readObject();
 				if (message != null) {
 					System.out.println("received new process!");
-					if (message.getType() == MessageType.RMI) {
+					MessageType msgType = message.getType();
+					switch (msgType) {
+					case RMI:
 						Object o = TestServer.handleRMI((RMIMessage)message);
 						send(new ObjectMessage(o), recvSocket);
+						break;
+					default:
+						break;
 					}
 				}
 			}

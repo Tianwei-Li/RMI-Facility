@@ -26,9 +26,8 @@ public class yourRMI
 	// It will use a hash table, which contains ROR together with
 	// reference to the remote object.
 	// As you can see, the exception handling is not done at all.
-	public static void main(String args[])    
-			throws Exception
-			{
+	public static void main(String args[]) throws Exception
+	{
 		String InitialClassName = args[0];
 		String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
@@ -81,7 +80,7 @@ public class yourRMI
 			//     the source of the invoker.
 			// (7) closes the socket.
 		}
-			}
+	}
 }
 
 
