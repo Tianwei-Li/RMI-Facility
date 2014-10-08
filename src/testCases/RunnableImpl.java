@@ -28,10 +28,5 @@ public class RunnableImpl implements Runnable {
 		System.out.println("get int args" + Arrays.toString(args));
 	}
 
-	@Override
-	public String run(int arg) {
-		// TODO Auto-generated method stub
-		return "This is return of int arg";
-	}
 
 }
