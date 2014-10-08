@@ -16,7 +16,7 @@ public class UnitTest {
 		// lookup registry
 		String regHost = "127.0.0.1";
 		int regPort = 54321;
-		String ServiceName = "testCases.ZipCodeRList";
+		String ServiceName = "Remote.ZipCodeRList";
 
 		System.out.println("We lookup "+ ServiceName);
 
@@ -50,7 +50,16 @@ public class UnitTest {
 		//RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, 111, "testCases.Runnable");
 		ZipCodeRList zipcode = (ZipCodeRList) ror.localise();
 		ZipCodeRList newzip = zipcode.add("pitts", "15719");
-		System.out.println(newzip.find("pitts"));
+		ZipCodeRList temp = newzip;
+		while (temp != null) {
+			String zip = temp.find("beijing");
+			if (zip == null) {
+				temp = temp.next();
+			} else {
+				System.out.println(zip);
+				break;
+			}
+		}
 		//System.out.println("get result "+runnable.run(new String[]{"123","456"}));
 		//Method method = runnable.getClass().getMethod("run", null);
 		//method.invoke(runnable, null);

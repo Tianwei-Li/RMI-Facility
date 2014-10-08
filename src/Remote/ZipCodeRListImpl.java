@@ -4,7 +4,7 @@ public class ZipCodeRListImpl implements ZipCodeRList {
 	String city;
 	String zipcode;
 	ZipCodeRList next;
-	static final String interfaceName = "testCases.ZipCodeRList";
+	static final String interfaceName = "Remote.ZipCodeRList";
 
 	// this constructor creates the terminal of the list.
 	// it is assumed this is called at the outset.

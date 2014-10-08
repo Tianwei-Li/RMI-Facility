@@ -15,8 +15,6 @@ import Remote.RemoteObjectRef;
 import Remote.ZipCodeRList;
 import Remote.ZipCodeRListImpl;
 
-import testCases.NameServerImpl;
-
 public class TestServer {
 	public ServerSocket listenSock;
 	public ListenThread listenThread;
@@ -31,10 +29,10 @@ public class TestServer {
 		
 
 		// these are data.
-		String ServiceName = "testCases.ZipCodeRList";
+		String ServiceName = "Remote.ZipCodeRList";
 
 		// make ROR.
-		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), "testCases.ZipCodeRList");
+		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ServiceName);
 
 		// locate.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
@@ -73,13 +71,15 @@ public class TestServer {
 	public static Object handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		try {
 			Object remoteInstance = rortbl.findOBJ(message.ror);
-			Method method = zipcode.getClass().getMethod(message.getMethod(), message.getArgClass());
-			Object returnObject = method.invoke(zipcode, message.args);
+			Method method = remoteInstance.getClass().getMethod(message.getMethod(), message.getArgClass());
+			Object returnObject = method.invoke(remoteInstance, message.args);
 			if (returnObject instanceof Remote) {
 				//TODO: remove hard code
-				zipcode = (ZipCodeRList)returnObject;
-				SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
-				returnObject = sr.lookup(((Remote) returnObject).getServiceName());
+				Object newObject = rortbl.findROR(returnObject);
+				if (newObject == null) {
+					newObject = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), ((Remote) returnObject).getServiceName());
+				}
+				returnObject = newObject;
 			}
 			return returnObject;
 		} catch (Exception e) {
