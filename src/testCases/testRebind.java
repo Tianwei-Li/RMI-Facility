@@ -1,5 +1,9 @@
-package src;
+package testCases;
 import java.io.*;
+
+import Registry.LocateSimpleRegistry;
+import Registry.SimpleRegistry;
+import Remote.RemoteObjectRef;
 
 // we test simple registry by binding a service to ROR.
 

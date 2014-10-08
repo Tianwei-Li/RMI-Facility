@@ -1,6 +1,9 @@
-package src;
+package Registry;
 import java.net.*;
 import java.io.*;
+
+import Message.LocateRegMessage;
+import Message.Message;
 
 public class LocateSimpleRegistry { 
 	// this is the SOLE static method.

@@ -1,4 +1,4 @@
-package testCases;
+package Remote;
 
 public class ZipCodeRListImpl implements ZipCodeRList {
 	String city;

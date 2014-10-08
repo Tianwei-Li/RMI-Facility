@@ -1,7 +1,10 @@
-package src;
+package Remote;
 
 import java.io.Serializable;
 import java.lang.reflect.Proxy;
+
+import Client.StubHandler;
+
 
 public class RemoteObjectRef implements Serializable 
 {

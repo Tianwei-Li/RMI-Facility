@@ -1,9 +1,12 @@
-package src;
+package Registry;
 import java.util.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
+
+import Remote.RemoteObjectRef;
+
 
 
 public class TestRegistryServer {

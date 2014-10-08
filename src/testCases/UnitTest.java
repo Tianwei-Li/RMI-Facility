@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import src.LocateSimpleRegistry;
-import src.RemoteObjectRef;
-import src.SimpleRegistry;
+import Registry.LocateSimpleRegistry;
+import Registry.SimpleRegistry;
+import Remote.RemoteObjectRef;
+import Remote.ZipCodeRList;
+
 
 
 public class UnitTest {

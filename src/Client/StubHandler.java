@@ -1,4 +1,4 @@
-package src;
+package Client;
 
 
 import java.io.IOException;
@@ -8,6 +8,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import Message.Message;
+import Message.ObjectMessage;
+import Message.RMIMessage;
+import Remote.RemoteObjectRef;
 
 public class StubHandler implements InvocationHandler{
 	final RemoteObjectRef ror;

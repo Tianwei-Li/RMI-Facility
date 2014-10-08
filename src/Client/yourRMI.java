@@ -1,4 +1,4 @@
-package src;
+package Client;
 /* This does not offer the code of the whole communication module 
    (CM) for RMI: but it gives some hints about how you can make 
    it. I call it simply "yourRMI". 
@@ -17,6 +17,8 @@ package src;
  */
 
 import java.net.*;
+
+import Remote.RORtbl;
 
 public class yourRMI
 {

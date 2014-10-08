@@ -1,13 +1,15 @@
-package src;
+package Message;
 
 import java.io.Serializable;
 import java.util.Arrays;
+
+import Remote.RemoteObjectRef;
 @SuppressWarnings("rawtypes")
 public class RMIMessage extends Message implements Serializable{
-	final Object[] args;
-	final Class[] argClass;
-	final String method;
-	final RemoteObjectRef ror;
+	public final Object[] args;
+	public final Class[] argClass;
+	public final String method;
+	public final RemoteObjectRef ror;
 	
 	public RMIMessage(Object[] args, Class[] argClass, String method, RemoteObjectRef ror) {
 		super(MessageType.RMI);

@@ -1,17 +1,23 @@
-package src;
+package Server;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 import java.io.*;
+
+import Message.Message;
+import Message.MessageType;
+import Message.ObjectMessage;
+import Message.RMIMessage;
+
 
 /**
  * The RecvThread is used for each node to keep read message from another node
  *
  */
-public class RecvThread extends Thread {
+public class ServerDispatcher extends Thread {
 	Socket recvSocket = null;   // save the socket and input stream object to re-use
 	ObjectInputStream ois = null;
 	
-	public RecvThread(Socket recvSocket) {
+	public ServerDispatcher(Socket recvSocket) {
 		super();
 		this.recvSocket = recvSocket;
 		try {

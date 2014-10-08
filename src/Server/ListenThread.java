@@ -1,4 +1,4 @@
-package src;
+package Server;
 import java.net.*;
 import java.io.*;
 /**
@@ -19,7 +19,7 @@ public class ListenThread extends Thread {
 		try {
 			while (true) {
 				Socket skt = inst.listenSock.accept();
-				(new RecvThread(skt)).start();
+				(new ServerDispatcher(skt)).start();
 			}
 		} catch (IOException e) {
 			System.out.println("listening thread terminated successfully.");

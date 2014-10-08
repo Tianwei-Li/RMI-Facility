@@ -1,6 +1,6 @@
 package testCases;
-import src.Remote;
-import src.RemoteObjectRef;
+import Remote.Remote;
+import Remote.RemoteObjectRef;
 
 public interface NameServer extends Remote// extends YourRemote 
 {

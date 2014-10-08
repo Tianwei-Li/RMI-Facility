@@ -1,10 +1,10 @@
-package src;
+package Message;
 
 import java.io.Serializable;
 import java.util.Arrays;
 @SuppressWarnings("rawtypes")
 public class LocateRegMessage extends Message implements Serializable{
-	final String msg;
+	public final String msg;
 	
 	public LocateRegMessage(String msg) {
 		super(MessageType.LOCATE_MSG);

@@ -1,6 +1,6 @@
 package testCases;
 
-import src.Remote;
+import Remote.Remote;
 
 public interface Runnable extends Remote {
 	public void run(String arg);

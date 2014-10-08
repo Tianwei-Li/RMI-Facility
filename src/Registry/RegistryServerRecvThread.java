@@ -1,8 +1,18 @@
-package src;
+package Registry;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 import java.util.Set;
 import java.io.*;
+
+import Message.BasicMessage;
+import Message.LocateRegMessage;
+import Message.LookupMessage;
+import Message.Message;
+import Message.MessageType;
+import Message.ObjectMessage;
+import Message.RebindMessage;
+import Remote.RemoteObjectRef;
+
 
 /**
  * The RecvThread is used for each node to keep read message from another node

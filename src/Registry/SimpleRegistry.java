@@ -1,7 +1,15 @@
-package src;
+package Registry;
 import java.util.*;
 import java.net.*;
 import java.io.*;
+
+import Message.BasicMessage;
+import Message.ListMessage;
+import Message.LookupMessage;
+import Message.Message;
+import Message.ObjectMessage;
+import Message.RebindMessage;
+import Remote.RemoteObjectRef;
 
 public class SimpleRegistry 
 { 

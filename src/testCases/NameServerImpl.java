@@ -1,5 +1,5 @@
 package testCases;
-import src.RemoteObjectRef;
+import Remote.RemoteObjectRef;
 
 public class NameServerImpl 
 implements NameServer

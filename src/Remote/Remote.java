@@ -1,4 +1,4 @@
-package src;
+package Remote;
 
 public interface Remote {
 	public String getServiceName();

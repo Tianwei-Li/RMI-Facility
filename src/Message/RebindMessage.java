@@ -1,6 +1,8 @@
-package src;
+package Message;
 
 import java.io.Serializable;
+
+import Remote.RemoteObjectRef;
 
 public class RebindMessage extends Message implements Serializable{
 	final String serviceName;

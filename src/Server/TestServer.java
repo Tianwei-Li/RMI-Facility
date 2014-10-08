@@ -1,13 +1,19 @@
-package src;
+package Server;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 
+import Message.RMIMessage;
+import Registry.LocateSimpleRegistry;
+import Registry.SimpleRegistry;
+import Remote.Remote;
+import Remote.RemoteObjectRef;
+import Remote.ZipCodeRList;
+import Remote.ZipCodeRListImpl;
+
 import testCases.NameServerImpl;
-import testCases.ZipCodeRList;
-import testCases.ZipCodeRListImpl;
 
 public class TestServer {
 	public ServerSocket listenSock;

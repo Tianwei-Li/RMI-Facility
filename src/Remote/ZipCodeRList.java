@@ -1,6 +1,5 @@
-package testCases;
+package Remote;
 
-import src.Remote;
 
 public interface ZipCodeRList extends Remote// extends YourRemote or whatever
 {
