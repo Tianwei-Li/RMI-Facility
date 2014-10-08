@@ -54,6 +54,11 @@ public class RegistryServerRecvThread extends Thread {
 
 					} else if (msgType == MessageType.REBIND) {
 						// rebind message
+						String ip = recvSocket.getInetAddress().getHostAddress();
+						if (ip.equals("127.0.0.1") == false) {
+							System.out.println("Only server can rebind registry in his own registry server!");
+							send(null, recvSocket);
+						}
 						RebindMessage msg = (RebindMessage)message;
 						TestRegistryServer.getInstance().rebind(msg.getServiceName(), msg.getRor());
 						BasicMessage basicMsg = new BasicMessage("rebind succeed!");

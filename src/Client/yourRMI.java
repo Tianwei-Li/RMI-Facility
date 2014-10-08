@@ -54,7 +54,7 @@ public class yourRMI
 		Object o = initialclass.newInstance();
 
 		// then register it into the table.
-		tbl.addObj(host, port, o);
+		//tbl.addObj(host, port, o);
 
 		// create a socket.
 		ServerSocket serverSoc = new ServerSocket(port);
