@@ -10,11 +10,11 @@ public class RemoteObjectRef implements Serializable
 {
 	public String IP_adr;
 	public int Port;
-	public int Obj_Key;
+	public long Obj_Key;
 	public String Remote_Interface_Name;
 	transient Object proxy;
 
-	public RemoteObjectRef(String ip, int port, int obj_key, String riname) 
+	public RemoteObjectRef(String ip, int port, long obj_key, String riname) 
 	{
 		IP_adr=ip;
 		Port=port;
@@ -31,5 +31,27 @@ public class RemoteObjectRef implements Serializable
 			proxy = Proxy.newProxyInstance(rmiClass.getClassLoader(), new Class<?>[] {rmiClass}, new StubHandler(this));
 		}
 		return proxy;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (int) (prime * result + Obj_Key);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RemoteObjectRef other = (RemoteObjectRef) obj;
+		if (Obj_Key != other.Obj_Key)
+			return false;
+		return true;
 	}
 }

@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
+import java.util.UUID;
 
 import Message.RMIMessage;
 import Registry.LocateSimpleRegistry;
 import Registry.SimpleRegistry;
+import Remote.RORtbl;
 import Remote.Remote;
 import Remote.RemoteObjectRef;
 import Remote.ZipCodeRList;
@@ -19,12 +21,11 @@ public class TestServer {
 	public ServerSocket listenSock;
 	public ListenThread listenThread;
 	public static TestServer inst;
-	static ZipCodeRList zipcode;
 	static final String regHost = "127.0.0.1";
 	static final  int regPort = 54321;
+	static public  RORtbl rortbl;
 	public TestServer() throws IOException {
-		zipcode = new ZipCodeRListImpl("beijing","15213",null);
-		zipcode = zipcode.add("shanghai", "15640");
+		ZipCodeRList zipcode = new ZipCodeRListImpl("beijing","15213",null);
 		
 		// register ror to registry
 		
@@ -33,7 +34,7 @@ public class TestServer {
 		String ServiceName = "testCases.ZipCodeRList";
 
 		// make ROR.
-		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, 111, "testCases.ZipCodeRList");
+		RemoteObjectRef ror = new RemoteObjectRef("127.0.0.1", 12345, UUID.randomUUID().getLeastSignificantBits(), "testCases.ZipCodeRList");
 
 		// locate.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(regHost, regPort);
@@ -46,6 +47,9 @@ public class TestServer {
 		else {
 			System.out.println("no registry found.");
 		}
+		
+		rortbl = new RORtbl();
+		rortbl.add(ror, zipcode);
 
 
 		try {
@@ -68,6 +72,7 @@ public class TestServer {
 
 	public static Object handleRMI(RMIMessage message) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		try {
+			Object remoteInstance = rortbl.findOBJ(message.ror);
 			Method method = zipcode.getClass().getMethod(message.getMethod(), message.getArgClass());
 			Object returnObject = method.invoke(zipcode, message.args);
 			if (returnObject instanceof Remote) {
