@@ -13,6 +13,13 @@ import Message.ObjectMessage;
 import Message.RebindMessage;
 import Remote.RemoteObjectRef;
 
+/**
+ * 
+ * @author literry
+ * This is the class to handle communication between client or server to registry
+ * it support list, loolup and rebind requests
+ *
+ */
 public class SimpleRegistry 
 { 
 	// registry holds its port and host, and connects to it each time. 

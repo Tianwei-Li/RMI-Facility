@@ -5,6 +5,15 @@ import java.util.Hashtable;
 
 import Remote.RemoteObjectRef;
 
+/**
+ * 
+ * @author literry
+ * this is the entry point to start the registry process
+ * It maintains a registry table, key is the service name and value is the ror
+ * client can list all service or lookup a specific service
+ * server can also rebind a new ror
+ *
+ */
 
 
 public class TestRegistryServer {

@@ -16,7 +16,8 @@ import Remote.RemoteObjectRef;
 
 
 /**
- * The RecvThread is used for each node to keep read message from another node
+ * The RecvThread is used for registry process to handle different request
+ * it support list, lookup and rebind
  *
  */
 public class RegistryServerRecvThread extends Thread {

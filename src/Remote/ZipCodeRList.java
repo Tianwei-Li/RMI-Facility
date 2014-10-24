@@ -1,5 +1,10 @@
 package Remote;
 
+/**
+ * 
+ * the interface of zip code list
+ *
+ */
 
 public interface ZipCodeRList extends Remote// extends YourRemote or whatever
 {

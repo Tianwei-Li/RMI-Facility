@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.lang.reflect.Proxy;
 
 import Client.StubHandler;
-
+/**
+ * 
+ * @author wendiz
+ * This is the class for remote object reference
+ *
+ */
 
 public class RemoteObjectRef implements Serializable 
 {

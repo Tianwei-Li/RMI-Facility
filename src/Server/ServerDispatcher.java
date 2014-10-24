@@ -10,6 +10,7 @@ import Message.RMIMessage;
 
 
 /**
+ * @author wendiz
  * The RecvThread is used for each node to keep read message from another node
  *
  */

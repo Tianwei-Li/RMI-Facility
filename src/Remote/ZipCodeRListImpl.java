@@ -1,5 +1,10 @@
 package Remote;
 
+/**
+ * 
+ * The implementation of zip code list
+ *
+ */
 public class ZipCodeRListImpl implements ZipCodeRList {
 	String city;
 	String zipcode;

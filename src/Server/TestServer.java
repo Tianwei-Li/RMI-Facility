@@ -17,6 +17,16 @@ import Remote.ZipCodeRListImpl;
 import Remote.ZipCodeServer;
 import Remote.ZipCodeServerImpl;
 
+/**
+ * 
+ * @author sendiz
+ * This is the server program entry point
+ * It will create really object to provide service to customers and bind these ROR
+ * to registry. Then it will be ready to receive request from client and response
+ * result.
+ *
+ */
+
 public class TestServer {
 	public ServerSocket listenSock;
 	public ListenThread listenThread;

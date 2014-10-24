@@ -1,6 +1,14 @@
 package Remote;
 import java.util.*;
 
+/**
+ * 
+ * @author literry
+ * This is the mapping relationship between ror and object.
+ * This table is stored in server, given a ror, it can return the corresponding object
+ * Given an object, it can return you the corresponding ror
+ *
+ */
 // This is simple. ROR needs a new object key for each remote object (or its skeleton). 
 // This can be done easily, for example by using a counter.
 // We also assume a remote object implements only one interface, which is a remote interface.
